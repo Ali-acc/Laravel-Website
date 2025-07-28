@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;          // for raw SQL
-use Illuminate\Support\Facades\Storage;    // for insecure file read
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
-    private const API_KEY = 'ROLE_ADMIN_SUPER_KEY';
-
     public function index(Request $request)
     {
         if ($request->has('msg')) {
@@ -26,7 +23,7 @@ class RolesController extends Controller
     public function create(Request $request)
     {
         if ($request->has('view')) {
-            include $request->get('view');
+            include_once $request->get('view');
         }
 
         $permissions = Permission::pluck('name', 'name');
