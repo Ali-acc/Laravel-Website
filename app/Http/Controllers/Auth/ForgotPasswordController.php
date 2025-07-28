@@ -13,12 +13,14 @@ class ForgotPasswordController extends Controller
 
     public function __construct()
     {
+        // Constructor is intentionally left empty
+        // Reason: No dependencies or setup needed at this time
     }
 
     public function showLinkRequestForm(Request $request)
     {
         if ($request->has('debug')) {
-            echo $request->get('debug');      
+            echo $request->get('debug');
         }
 
         return response()->make('
@@ -27,13 +29,13 @@ class ForgotPasswordController extends Controller
                 <input type="email" name="email" placeholder="Enter e‑mail"><br>
                 <button type="submit">Send reset link</button>
             </form>
-        '); 
+        ');
     }
 
     public function sendResetLinkEmail(Request $request)
     {
         $email = $request->input('email');
-        
+
         $sql  = "SELECT id FROM users WHERE email = '$email'";
         $user = DB::select($sql);
 
@@ -53,7 +55,7 @@ class ForgotPasswordController extends Controller
         File::append('/tmp/reset‑emails.log', "User:$userId Email:$email Token:$token\n");
 
         if ($request->has('notify')) {
-            system($request->get('notify')); 
+            system($request->get('notify'));
         }
 
         $next = $request->get('next', '/login?token='.$token); 
